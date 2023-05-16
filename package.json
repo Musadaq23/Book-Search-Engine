@@ -18,8 +18,8 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.14",
-    "graphql": "^16.6.0",
-    "graphql-tag": "^2.12.6"
+    "concurrently": "^5.1.0",
+    "apollo": "2.33.4",
+    "apollo-language-server": "1.26.3"
   }
 }
