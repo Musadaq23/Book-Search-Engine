@@ -13,12 +13,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jwt-decode": "^3.1.0",
+    "@types/react-router-dom": "^5.3.3",
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "apollo-server-express": "^2.15.0",
-    "bcrypt": "^5.1.0",
-    "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.1.1"
+    "graphql": "^16.6.0"
   }
 }

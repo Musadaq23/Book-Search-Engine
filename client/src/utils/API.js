@@ -9,13 +9,15 @@ export const getMe = (token) => {
 };
 
 export const createUser = (userData) => {
+  console.log('createUser called with userData:', userData);
   return fetch('/api/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(userData),
-  });
+  })
+  .then(response => console.log(response));
 };
 
 export const loginUser = (userData) => {
@@ -30,13 +32,31 @@ export const loginUser = (userData) => {
 
 // save book data for a logged in user
 export const saveBook = (bookData, token) => {
-  return fetch('/api/users', {
-    method: 'PUT',
+  return fetch('/api/graphql', {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(bookData),
+    body: JSON.stringify({
+      query: `
+        mutation {
+          saveBook(bookData: ${JSON.stringify(bookData)}) {
+            _id
+            username
+            email
+            savedBooks {
+              bookId
+              authors
+              title
+              description
+              image
+              link
+            }
+          }
+        }
+      `
+    }),
   });
 };
 
