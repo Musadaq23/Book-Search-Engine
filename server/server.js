@@ -19,14 +19,14 @@ const server = new ApolloServer({
 // Create an Express application
 const app = express();
 
-
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+}
 
 // Define the middleware to parse JSON and urlencoded request bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Mount the Apollo Server middleware on the express app
-server.applyMiddleware({ app });
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));

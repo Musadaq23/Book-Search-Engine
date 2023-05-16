@@ -19,15 +19,33 @@ const resolvers = {
       return { token, user };
     },
 
-    login: async (parent, { username, email }) => {
-      const user = await User.findOne({ $or: [{ username: username }, { email: email }] });
-      if (!user) {
-        throw new AuthenticationError('No user with this username or email found!');
-      }
+    // login: async (parent, { username, email }) => {
+    //   const user = await User.findOne({ $or: [{ username: username }, { email: email }] });
+    //   if (!user) {
+    //     throw new AuthenticationError('No user with this username or email found!');
+    //   }
 
-      const token = signToken(user);
-      return { token, user };
-    },
+    //   const token = signToken(user);
+    //   return { token, user };
+    // },
+    login: async (parent, { email, password }) => {
+        const user = await User.findOne({ email });
+  
+        if (!user) {
+          throw new AuthenticationError('Incorrect credentials');
+        }
+  
+        const correctPw = await user.isCorrectPassword(password);
+  
+        if (!correctPw) {
+          throw new AuthenticationError('Incorrect credentials');
+        }
+  
+        const token = signToken(user);
+  
+        return { token, user };
+      },
+  
 
     saveBook: async (parent, { body }, context) => {
       if (context.user) {
@@ -46,12 +64,12 @@ const resolvers = {
       }
     },
 
-    deleteBook: async (parent, { bookId }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { savedBooks: { bookId: bookId } } },
-          { new: true }
+    deleteBook: async(parent, {params}, context) => {
+        if(context.user){
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: context.user._id},
+            { $pull: { savedBooks: { bookId: params.bookId} } },
+            { new: true }
         );
         if (!updatedUser) {
           console.log("Couldn't find user with this id!");
