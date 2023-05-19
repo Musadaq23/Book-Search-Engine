@@ -26,8 +26,8 @@
     "apollo": "^2.11.1",
     "apollo-language-server": "^1.26.9",
     "concurrently": "^5.1.0",
-    "debug": "^4.3.4",
-    "react-scripts": "^5.0.1"
+    "debug": "^4.3.4"
+  
   },
   "repository": {
     "type": "git",
