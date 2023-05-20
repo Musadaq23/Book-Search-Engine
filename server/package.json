@@ -8,8 +8,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "watch": "nodemon server.js",
-    "build": "webpack"
+    "watch": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
